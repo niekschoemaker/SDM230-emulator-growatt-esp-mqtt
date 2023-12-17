@@ -13,6 +13,8 @@ SoftwareSerial SoftSerial(D3, D2);
 const char* ssid = "Your SSID";
 const char* password = "YourWiFiPassword";
 const char* mqtt_server = "192.168.0.1"; //Your MQTT Server's IP
+const char* mqtt_username = "YourMqttUsername"; // Set to NULL to not use a username
+const char* mqtt_password = "YourMqttPassword"; // Set to NULL to not use a password
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -89,7 +91,7 @@ void reconnect() {
     String clientId = "ESP8266Client-";
     clientId += String(random(0xffff), HEX);
     // Attempt to connect
-    if (client.connect(clientId.c_str())) {
+    if (client.connect(clientId.c_str(), mqtt_username, mqtt_password)) {
       Serial.println("connected");
       // Once connected, publish an announcement...
       //client.publish("garage/temp", "start");
